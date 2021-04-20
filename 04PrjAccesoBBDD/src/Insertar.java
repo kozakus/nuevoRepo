@@ -7,10 +7,12 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.awt.event.ActionEvent;
@@ -28,6 +30,7 @@ public class Insertar extends JFrame {
 	private JTextField txtPass;
 	private JTextField txtNombre;
 	private Connection conexion;
+	private JTextField txtBuscar;
 
 	/**
 	 * Launch the application.
@@ -99,6 +102,45 @@ public class Insertar extends JFrame {
 		btnInsertar.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnInsertar.setBounds(18, 190, 219, 47);
 		panel.add(btnInsertar);
+		
+		
+		/************************ BOTON BUSCAR **************************/
+		JButton btnBuscar = new JButton("BUSCAR");
+		btnBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String str_buscar = txtBuscar.getText();
+				String sql = "SELECT * FROM `trj_user` WHERE `trj_user` ='" + str_buscar + "'";
+				Statement registro;
+				try {
+					registro = conexion.createStatement();
+					ResultSet consulta = registro.executeQuery(sql);
+					
+					if(consulta.next()) {
+					txtUser.setText(consulta.getString("user"));
+					txtPass.setText(consulta.getString("pass"));
+					txtNombre.setText(consulta.getString("nombre"));
+					}
+					else {
+						//no se ejecuta porque no existe.
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
+				//
+				System.out.println(sql);
+			}
+		});
+		btnBuscar.setBounds(353, 217, 83, 36);
+		btnBuscar.setIcon(new ImageIcon("assets/lupa.png"));
+		contentPane.add(btnBuscar);
+		
+		txtBuscar = new JTextField();
+		txtBuscar.setBounds(352, 121, 76, 86);
+		contentPane.add(txtBuscar);
+		txtBuscar.setColumns(10);
 		btnInsertar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String user = txtUser.getText().toString();
