@@ -32,6 +32,7 @@ public class modificar extends JFrame {
 	private Connection conexion;
 	private JTextField txtBuscar;
 	private JLabel lblNotFound;
+	private String str_buscar;
 
 	/**
 	 * Launch the application.
@@ -98,12 +99,12 @@ public class modificar extends JFrame {
 		txtNombre.setBounds(92, 145, 173, 35);
 		panel.add(txtNombre);
 		txtNombre.setColumns(10);
-		JButton btnInsertar = new JButton("Registrar");
-		btnInsertar.setBackground(SystemColor.textHighlight);
-		btnInsertar.setForeground(UIManager.getColor("CheckBox.darkShadow"));
-		btnInsertar.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnInsertar.setBounds(18, 190, 219, 47);
-		panel.add(btnInsertar);
+		JButton btnModificar = new JButton("Modificar");
+		btnModificar.setBackground(SystemColor.textHighlight);
+		btnModificar.setForeground(UIManager.getColor("CheckBox.darkShadow"));
+		btnModificar.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnModificar.setBounds(18, 190, 219, 47);
+		panel.add(btnModificar);
 		
 		txtBuscar = new JTextField();
 		txtBuscar.setBounds(349, 96, 79, 55);
@@ -114,7 +115,7 @@ public class modificar extends JFrame {
 		JButton btnBuscar = new JButton("Buscar");
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String str_buscar = txtBuscar.getText();
+				str_buscar = txtBuscar.getText();
 				String sql = "SELECT * FROM  `trj_user` WHERE `user` LIKE '" + str_buscar + "';";
 						
 				Statement registro;
@@ -144,16 +145,17 @@ public class modificar extends JFrame {
 		lblNotFound.setBounds(366, 50, 42, 13);
 		contentPane.add(lblNotFound);
 		lblNotFound.setVisible(false);
-	
-		
-		btnInsertar.addActionListener(new ActionListener() {
+
+		/////////////////////// INSERTAR ////////////////////////
+		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//str_buscar = txtBuscar.getText();
 				String user = txtUser.getText().toString();
 				String pass = txtPass.getText().toString();
 				String nombre = txtNombre.getText().toString();
 				
-				String sql = "INSERT INTO `trj_user` (`user`, `pass`, `nombre`) "
-						+ "VALUES ('"+ user +"', '"+ pass +"', '"+ nombre + "');";
+				String sql = "UPDATE `trj_user` SET `user`="
+						+ " '"+user+"',  `pass`='"+ pass +"',`nombre`='"+nombre+"' WHERE `user`= '"+str_buscar+"';";
 				
 				//para comprobar que genera el código correcto de SQL
 				//System.out.println(sql); 
