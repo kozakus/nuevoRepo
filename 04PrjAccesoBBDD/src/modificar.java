@@ -23,13 +23,15 @@ import java.awt.SystemColor;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 
-public class Insertar extends JFrame {
+public class modificar extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtUser;
 	private JTextField txtPass;
 	private JTextField txtNombre;
 	private Connection conexion;
+	private JTextField txtBuscar;
+	private JLabel lblNotFound;
 
 	/**
 	 * Launch the application.
@@ -38,7 +40,7 @@ public class Insertar extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Insertar frame = new Insertar();
+					modificar frame = new modificar();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -50,7 +52,8 @@ public class Insertar extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Insertar() {
+	public modificar() {
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -102,6 +105,46 @@ public class Insertar extends JFrame {
 		btnInsertar.setBounds(18, 190, 219, 47);
 		panel.add(btnInsertar);
 		
+		txtBuscar = new JTextField();
+		txtBuscar.setBounds(349, 96, 79, 55);
+		contentPane.add(txtBuscar);
+		txtBuscar.setColumns(10);
+		
+		//BOTON BUSCAR
+		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String str_buscar = txtBuscar.getText();
+				String sql = "SELECT * FROM  `trj_user` WHERE `user` LIKE '" + str_buscar + "';";
+						
+				Statement registro;
+				try {
+					registro = conexion.createStatement();
+					ResultSet consulta = registro.executeQuery(sql);
+										
+					if(consulta.next()) {
+						lblNotFound.setVisible(false);
+						txtUser.setText(consulta.getString("user"));
+						txtPass.setText(consulta.getString("pass"));
+						txtNombre.setText(consulta.getString("nombre"));
+					}
+					else {
+						lblNotFound.setVisible(true);
+					}
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
+			}
+		});
+		btnBuscar.setBounds(345, 195, 83, 21);
+		contentPane.add(btnBuscar);
+		
+		
+		lblNotFound = new JLabel("Not Found");
+		lblNotFound.setBounds(366, 50, 42, 13);
+		contentPane.add(lblNotFound);
+		lblNotFound.setVisible(false);
+	
 		
 		btnInsertar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
