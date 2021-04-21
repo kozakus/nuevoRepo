@@ -111,7 +111,7 @@ public class modificar extends JFrame {
 		contentPane.add(txtBuscar);
 		txtBuscar.setColumns(10);
 		
-		//BOTON BUSCAR
+		////////////////////// BOTON BUSCAR /////////////////////////////
 		JButton btnBuscar = new JButton("Buscar");
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -122,7 +122,7 @@ public class modificar extends JFrame {
 				try {
 					registro = conexion.createStatement();
 					ResultSet consulta = registro.executeQuery(sql);
-										
+					
 					if(consulta.next()) {
 						lblNotFound.setVisible(false);
 						txtUser.setText(consulta.getString("user"));
@@ -139,14 +139,13 @@ public class modificar extends JFrame {
 		});
 		btnBuscar.setBounds(345, 195, 83, 21);
 		contentPane.add(btnBuscar);
-		
-		
+
 		lblNotFound = new JLabel("Not Found");
 		lblNotFound.setBounds(366, 50, 42, 13);
 		contentPane.add(lblNotFound);
 		lblNotFound.setVisible(false);
 
-		/////////////////////// INSERTAR ////////////////////////
+		/////////////////////// BOTON ACTUALIZAR ////////////////////////
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//str_buscar = txtBuscar.getText();
