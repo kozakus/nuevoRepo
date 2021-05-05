@@ -169,6 +169,7 @@ public class Eliminar extends JFrame {
 					if(ok==0) {
 						comando.executeUpdate(sql);
 						txtBuscar.setText(null);
+						limpiar_campos();
 					
 					}
 					// ResultSet - Almacena el resultado de nuestra consulta
@@ -197,6 +198,7 @@ public class Eliminar extends JFrame {
 			JOptionPane.showMessageDialog(this, e.toString());
 		}
 	}//fin constructor de la clase
+	
 	/*************** LIMPIAR CAMPOS ******************/
 	public void limpiar_campos(){
 		txtUser.setText(null);

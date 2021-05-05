@@ -135,14 +135,12 @@ public class ListUser extends JFrame {
 					
 					//str_buscar.modelo.getValueAt(fila,columna).toString();
 					txtUser.setText(modelo.getValueAt(fila, columna).toString());
-					txtNombre.setText(modelo.getValueAt(fila, columna+1).toString());
-					txtPass.setText(modelo.getValueAt(fila, columna+2).toString());
-					
+					txtPass.setText(modelo.getValueAt(fila, columna+1).toString());
+					txtNombre.setText(modelo.getValueAt(fila, columna+2).toString());
+										
 					btnModificar.setEnabled(true); //para que se active el boton cuando se llenan los campos
 					
-				}
-				
-				
+				}	
 			}
 			
 		});
@@ -180,6 +178,16 @@ public class ListUser extends JFrame {
 					
 					String msg = "El registro ha sido grabado con éxito";
 					JOptionPane.showMessageDialog(null, msg, "Registro", JOptionPane.INFORMATION_MESSAGE);
+					
+					/**************** REFRESCAR EL MODELO DESPUES DE MODIFICAR *******************/
+					int contador = modelo.getRowCount();
+					for (int i = contador - 1; i >= contador; i--) {
+						modelo.removeRow(i);
+						//contador = modelo.getRowCount();
+						System.out.println("ahora");
+					}
+					
+				rellenar_tabla();	
 				} catch (SQLException e1) {
 					//ERRORES
 					// el SYSO hace que ponga el error exacto 
@@ -187,7 +195,6 @@ public class ListUser extends JFrame {
 					String msg = "No ha sido posible realizar la operación";
 					JOptionPane.showMessageDialog(null,msg, "Error bbdd", 0);
 				}
-				
 			}
 		});
 		
@@ -200,6 +207,7 @@ public class ListUser extends JFrame {
 					" revise los datos de conexion");
 			JOptionPane.showMessageDialog(this, e.toString());
 		}
+		// llamar a la función de rellenar la tabla.
 		rellenar_tabla();
 	}//fin constructor de la clase
 	
