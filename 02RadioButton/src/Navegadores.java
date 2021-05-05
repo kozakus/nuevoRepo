@@ -126,9 +126,7 @@ public class Navegadores extends JFrame {
 		///////////////////////////////////
 		bg.add(rdbYahoo);
 		panel.add(rdbYahoo);
-		
-		
-			
+
 		rdbDuck = new JRadioButton("Duck Duck Go");
 		rdbDuck.setBounds(4, 77, 99, 21);
 		bg.add(rdbDuck);
